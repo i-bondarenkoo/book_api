@@ -9,3 +9,9 @@ class BookCreateSchema(BaseModel):
 
 class BookResponseSchema(BookCreateSchema):
     id: int
+
+
+class UpdateBookSchema(BookCreateSchema):
+    title: str | None = None
+    author: str | None = None
+    year: int | None = None
