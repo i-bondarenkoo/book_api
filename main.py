@@ -2,7 +2,8 @@ from fastapi import FastAPI
 import uvicorn
 from database import engine, Base
 from contextlib import asynccontextmanager
-from routers import router as router_books
+from router_api.routers_book import router as router_books
+from router_api.routers_author import router as router_authors
 
 
 @asynccontextmanager
@@ -21,6 +22,11 @@ app.include_router(
     router_books,
     prefix="/books",
     tags=["Books"],
+)
+app.include_router(
+    router_authors,
+    prefix="/authors",
+    tags=["Authors"],
 )
 
 

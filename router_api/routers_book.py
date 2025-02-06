@@ -3,7 +3,7 @@ import crud
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
 from database import get_session_db
-from schemas import BookCreateSchema
+from schemas import BookCreateSchema, UpdateBookSchema
 
 
 router = APIRouter()
@@ -36,22 +36,12 @@ async def delete_book(
     return await crud.delete_book_db(book_id=book_id, session=session)
 
 
-# @router.get("/search/{title}")
-# async def search_book(title: str, session: AsyncSession = Depends(get_session_db)):
-#     return await crud.search_book_db(title=title, session=session)
-
-
-# @router.get("/filter/{year_left}/{year_right}")
-# async def filter_book_for_year(
-#     year_left: int, year_right: int, session: AsyncSession = Depends(get_session_db)
-# ):
-#     return await crud.filter_book_for_year_db(
-#         year_left=year_left, year_right=year_right, session=session
-#     )
-
-
-# @router.get("/{author}")
-# async def get_books_by_author(
-#     author: str, session: AsyncSession = Depends(get_session_db)
-# ):
-#     return await crud.get_books_by_author_db(author=author, session=session)
+@router.patch("/{book_id}")
+async def update_book(
+    update_book: UpdateBookSchema,  # Модель для обновления
+    book_id: int,
+    session: AsyncSession = Depends(get_session_db),
+):
+    return await crud.update_book_db(
+        update_book=update_book, book_id=book_id, session=session
+    )
